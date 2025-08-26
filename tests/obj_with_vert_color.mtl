@@ -1,0 +1,12 @@
+#
+# Wavefront material file
+# Created in RealityScan
+# Engine version v2.0.0.118621
+#
+
+newmtl obj_with_vert_color_u1_v1
+Ka 1 1 1
+Kd 1 1 1
+d 1
+Ns 0
+illum 1

@@ -1,0 +1,15 @@
+#
+# Wavefront OBJ file
+# Created in RealityScan
+# Engine version v2.0.0.118621
+# 180475 vertices, 358959 faces
+#
+mtllib obj_with_vert_color.mtl
+
+v 14.315459251403809 -2.468681573867798 9.272943496704102 0.031373 0.043137 0.031373
+
+vt 5.694264769554138 0.34770771861076357
+
+g default
+usemtl obj_with_vert_color_u1_v1
+f 1/1 1/1 1/1

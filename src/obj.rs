@@ -374,6 +374,17 @@ impl<'a> Parser<'a> {
       .map_err(|_| self.error_raw(format!("Expected f64 but got {}.", s)))
   }
 
+  fn peek_new_line_or_eof(&mut self) -> bool {
+    match self.peek() {
+      Some(next) => next == "\n",
+      None => true,
+    }
+  }
+
+  // A vertex may have
+  // x y z [w], where w is the perspective divider
+  // x y z r g b, where rgb are vertex colors
+  // The latter is an extension used by f.ex. RealityCapture
   fn parse_vertex(&mut self) -> Result<Vertex, ParseError> {
     self.parse_tag("v")?;
 
@@ -381,7 +392,25 @@ impl<'a> Parser<'a> {
     let y = self.parse_double()?;
     let z = self.parse_double()?;
 
-    Ok(Vertex { x, y, z })
+    if self.peek_new_line_or_eof() {
+      return Ok(Vertex { x, y, z });
+    }
+
+    let w = self.parse_double()?;
+    if self.peek_new_line_or_eof() {
+      return Ok(Vertex {
+        x: x / w,
+        y: y / w,
+        z: z / w,
+      });
+    }
+
+    // Should optional colors be added to vertex?
+    let _r = w;
+    let _g = self.parse_double()?;
+    let _b = self.parse_double()?;
+
+    return Ok(Vertex { x, y, z });
   }
 
   fn parse_tex_vertex(&mut self) -> Result<TVertex, ParseError> {
